@@ -1,0 +1,15 @@
+[Unit]
+Description=Shairport Sync - AirPlay Audio Receiver
+Requires=nqptp.service
+Wants=network-online.target
+After=network.target network-online.target nqptp.service sound.target
+
+[Service]
+EnvironmentFile=/tmp/v1-%I-extraopts.env
+ExecStart=/usr/bin/shairport-sync-v1 "$OPTS"
+Restart=always
+RestartSec=1
+Nice=-20
+
+[Install]
+WantedBy=multi-user.target

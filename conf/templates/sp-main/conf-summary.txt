@@ -1,0 +1,4 @@
+FIXME: Please place here the short summary of what this build configuration is for.
+It will be shown to the users when they set up their builds via TEMPLATECONF.
+
+TEMPLATECONF=./meta-seamless-point/conf/templates/sp-main . /mnt/yocto/poky/oe-init-build-env build-try-sp-main

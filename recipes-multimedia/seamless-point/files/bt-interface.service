@@ -1,0 +1,11 @@
+[Unit]
+Description=Bluetooth Connect controller
+Requires=bluetooth.service bluealsa.service
+After=bluetooth.service bluealsa.service
+
+[Service]
+ExecStart=/usr/bin/bt-interface.sh start
+ExecStop=/usr/bin/bt-interface.sh stop
+
+[Install]
+WantedBy=default.target
