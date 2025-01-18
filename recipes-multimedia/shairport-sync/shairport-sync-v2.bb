@@ -23,4 +23,4 @@ do_install:append() {
 FILES:${PN} += "${systemd_unitdir}/system/*"
 FILES:${PN}-dev += "${sysconfdir}/shairport-sync.conf ${sysconfdir}/shairport-sync.conf.sample"
 
-RDEPENDS:${PN} += "nqptp"
+CONFFILES:${PN} = "${sysconfdir}/shairport-sync-v2-usb.conf ${sysconfdir}/shairport-sync-v2-bt.conf"
