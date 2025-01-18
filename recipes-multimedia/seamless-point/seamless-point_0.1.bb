@@ -10,11 +10,13 @@
 #   LICENSE
 LICENSE = "CLOSED"
 
-SRC_URI = "file://aux-interface.sh \
-    file://aux-interface.service \
-    file://bt-interface.sh \
-    file://bt-interface.service \
-"
+SRC_URI = "file://99-usb-audio.rules \
+           file://aux-interface.service \
+           file://aux-interface.sh \
+           file://bt-interface.service \
+           file://bt-interface.sh \
+           file://0001-add-new-usb-audio-udev-rule.patch \
+          "
 
 S = "${WORKDIR}"
 
@@ -27,9 +29,12 @@ do_install() {
 
     install -m 0755 ${WORKDIR}/aux-interface.sh ${D}${bindir}/
     install -m 0755 ${WORKDIR}/bt-interface.sh ${D}${bindir}/
+
+    install -d ${D}${sysconfdir}/udev/rules.d/
+    install -m 0755 ${WORKDIR}/99-usb-audio.rules ${D}/${sysconfdir}/udev/rules.d/
 }
 
-FILES:${PN} += "${systemd_unitdir}/system/"
+FILES:${PN} += "${systemd_unitdir}/system/ ${sysconfdir}/udev/rules.d/99-usb-audio.rules"
 
 RDEPENDS:${PN} += "shairport-sync-v1 shairport-sync-v2 bluez-tools bluealsa bluez5 alsa-utils ntp gawk"
 RRECOMMENDS:${PN} += "\
