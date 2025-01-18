@@ -5,7 +5,8 @@ SRC_URI += "file://shairport-sync-v1-aux.conf \
             file://shairport-sync-v1@aux.service \
             file://shairport-sync-v1@.service"
 
-EXTRA_OECONF = "--with-apple-alac --with-alsa --with-avahi --with-soxr --with-ssl=mbedtls"
+EXTRA_OECONF = "--with-apple-alac --with-alsa --with-dns_sd --with-soxr --with-ssl=mbedtls"
+EXTRA_OEMAKE = "CFLAGS=-I${STAGING_INCDIR}/avahi-compat-libdns_sd"
 
 do_install:append() {
 	install -d ${D}${sysconfdir}/
