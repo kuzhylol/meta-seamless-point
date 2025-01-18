@@ -8,14 +8,14 @@ if [ -z $CARD_ID ]; then
 fi
 
 if [ -z $CARD_MODEL ]; then
-    echo "No USB Sound card model defined, continue..."
+    echo "No USB Sound Card model defined, continue..."
     CARD_MODEL="Headphones"
 fi
 
 USB_ID="$CARD_ID"
 USB_DEV_NAME="$CARD_MODEL"
 
-USB_SERVICE_NAME=aux
+USB_SERVICE_NAME=usb
 USB_DEFAULT_SYMBOL=🎧
 
 set_usb_env() {
@@ -25,7 +25,8 @@ set_usb_env() {
 }
 
 remove_usb_env() {
-    [ -r /tmp/${1}-${USB_SERVICE_NAME}-extraopts.env ] && rm -f ${auxenv}
+    [ -r /tmp/${1}-${USB_SERVICE_NAME}-extraopts.env ] && \
+        rm -f /tmp/${1}-${USB_SERVICE_NAME}-extraopts.env
 }
 
 start_services() {

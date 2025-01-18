@@ -11,11 +11,10 @@
 LICENSE = "CLOSED"
 
 SRC_URI = "file://99-usb-audio.rules \
-           file://aux-interface.service \
-           file://aux-interface.sh \
+           file://usb-interface.service \
+           file://usb-interface.sh \
            file://bt-interface.service \
            file://bt-interface.sh \
-           file://0001-add-new-usb-audio-udev-rule.patch \
           "
 
 S = "${WORKDIR}"
@@ -24,10 +23,10 @@ do_install() {
     install -d ${D}${bindir}/
     install -d ${D}${systemd_unitdir}/system/
 
-    install -m 0644 ${WORKDIR}/aux-interface.service ${D}${systemd_unitdir}/system/
+    install -m 0644 ${WORKDIR}/usb-interface.service ${D}${systemd_unitdir}/system/
     install -m 0644 ${WORKDIR}/bt-interface.service ${D}${systemd_unitdir}/system/
 
-    install -m 0755 ${WORKDIR}/aux-interface.sh ${D}${bindir}/
+    install -m 0755 ${WORKDIR}/usb-interface.sh ${D}${bindir}/
     install -m 0755 ${WORKDIR}/bt-interface.sh ${D}${bindir}/
 
     install -d ${D}${sysconfdir}/udev/rules.d/

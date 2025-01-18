@@ -1,0 +1,9 @@
+[Unit]
+Description=AUX Connect controller
+
+[Service]
+ExecStart=/usr/bin/usb-interface.sh start
+ExecStop=/usr/bin/usb-interface.sh stop
+
+[Install]
+WantedBy=default.target
