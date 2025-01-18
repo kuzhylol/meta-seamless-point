@@ -3,6 +3,10 @@ RUN+="/bin/bash -c \"\
 CARD_NUMBER=$(echo $DEVPATH | awk -F'/' '{print $NF}' | /usr/bin/sed 's/card//'); \
 CARD_ID=$(cat /proc/asound/card${CARD_NUMBER}/id); echo CARD_ID=$CARD_ID >> /tmp/usbsound_plug.env; \
 CARD_MODEL=$(echo -e $ID_USB_MODEL_ENC); echo CARD_MODEL=\'$CARD_MODEL\' >> /tmp/usbsound_plug.env; \
+systemctl start usb-interface; \
 \""
 
-ACTION=="remove", SUBSYSTEM=="sound", RUN+="/bin/bash -c \"rm -f /tmp/usbsound_plug.env\""
+ACTION=="remove", SUBSYSTEM=="sound", \
+RUN+="/bin/bash -c \"systemctl stop usb-interface; \
+rm -f /tmp/usbsound_plug.env; \
+\""

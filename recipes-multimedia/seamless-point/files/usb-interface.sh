@@ -2,12 +2,12 @@
 
 source /tmp/usbsound_plug.env
 
-if [ -z $CARD_ID ]; then
+if [ -z "$CARD_ID" ]; then
     echo "No USB device available"
     exit 1
 fi
 
-if [ -z $CARD_MODEL ]; then
+if [ -z "$CARD_MODEL" ]; then
     echo "No USB Sound Card model defined, continue..."
     CARD_MODEL="Headphones"
 fi
