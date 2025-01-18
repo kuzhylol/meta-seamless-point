@@ -8,16 +8,16 @@ SRC_URI += "file://shairport-sync-v2-aux.conf \
 EXTRA_OECONF = "--with-soxr --with-apple-alac --with-avahi --with-ssl=openssl --with-alsa --with-airplay-2"
 
 do_install:append() {
-	install -d ${D}${sysconfdir}/
-	install -d ${D}${systemd_unitdir}/system/
+    install -d ${D}${sysconfdir}/
+    install -d ${D}${systemd_unitdir}/system/
 
-	install -m 0644 ${WORKDIR}/shairport-sync-v2-aux.conf ${D}${sysconfdir}/
-	install -m 0644 ${WORKDIR}/shairport-sync-v2-bt.conf ${D}${sysconfdir}/
+    install -m 0644 ${WORKDIR}/shairport-sync-v2-aux.conf ${D}${sysconfdir}/
+    install -m 0644 ${WORKDIR}/shairport-sync-v2-bt.conf ${D}${sysconfdir}/
 
-	install -m 0644 ${WORKDIR}/shairport-sync-v2@aux.service ${D}${systemd_unitdir}/system/
-	install -m 0644 ${WORKDIR}/shairport-sync-v2@.service ${D}${systemd_unitdir}/system/
+    install -m 0644 ${WORKDIR}/shairport-sync-v2@aux.service ${D}${systemd_unitdir}/system/
+    install -m 0644 ${WORKDIR}/shairport-sync-v2@.service ${D}${systemd_unitdir}/system/
 
-	mv ${D}${bindir}/shairport-sync ${D}${bindir}/shairport-sync-v2
+    mv ${D}${bindir}/shairport-sync ${D}${bindir}/shairport-sync-v2
 }
 
 FILES:${PN} += "${systemd_unitdir}/system/*"
