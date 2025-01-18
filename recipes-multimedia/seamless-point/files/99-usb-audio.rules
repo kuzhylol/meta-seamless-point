@@ -1,4 +1,4 @@
-ACTION=="change", SUBSYSTEM=="sound", \
+ACTION=="change", SUBSYSTEM=="sound", ENV{ID_BUS}=="usb", ENV{ID_USB_DRIVER}=="snd-usb-audio" \
 RUN+="/bin/bash -c \"\
 CARD_NUMBER=$(echo $DEVPATH | awk -F'/' '{print $NF}' | /usr/bin/sed 's/card//'); \
 CARD_ID=$(cat /proc/asound/card${CARD_NUMBER}/id); echo CARD_ID=$CARD_ID >> /tmp/usbsound_plug.env; \
