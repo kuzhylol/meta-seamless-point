@@ -1,57 +1,56 @@
-#!/bin/sh
+#!/bin/sh -x
 
-AUX_SERVICE_NAME="aux"
-AUX_DEV="usbstream"
-AUX_DEFAULT_SYMBOL="🎧"
-AUX_DEFAULT_NAME="Headphones"
+source /tmp/usbsound_plug.env
 
-set_aux_env() {
-    local auxenv="/tmp/${1}-${AUX_SERVICE_NAME}-extraopts.env"
-    if [ ! -r ${auxenv} ]; then
-        local devname="${AUX_DEFAULT_SYMBOL} $(aplay -l 2>/dev/null | awk -F' \[|\]' '/card [0-9]+: / {print $2}')"
-        local alsadev="$(aplay -L 2>/dev/null | grep ${AUX_DEV} | awk -F'=' '{print $2}')"
-        echo "DEVICE_NAME=\"${devname}\"" > ${auxenv}
-        echo "ALSA_DEVICE=\"${AUX_ALSA_DEV}\"" >> ${auxenv}
-        echo "OPTS=\"--name '${devname}' --output=alsa -- -d hw:${alsadev}\"" >> ${auxenv}
-    fi
+if [ -z $CARD_ID ]; then
+    echo "No USB device available"
+    exit 1
+fi
+
+if [ -z $CARD_MODEL ]; then
+    echo "No USB Sound card model defined, continue..."
+    CARD_MODEL="Headphones"
+fi
+
+USB_ID="$CARD_ID"
+USB_DEV_NAME="$CARD_MODEL"
+
+USB_SERVICE_NAME=aux
+USB_DEFAULT_SYMBOL=🎧
+
+set_usb_env() {
+    echo USB_DEV_NAME=$USB_DEV_NAME > /tmp/${1}-${USB_SERVICE_NAME}-extraopts.env
+    echo USB_ID=${USB_ID} >> /tmp/${1}-${USB_SERVICE_NAME}-extraopts.env
+    echo OPTS=\"--name \'$USB_DEFAULT_SYMBOL $USB_DEV_NAME\' --output=alsa -- -d hw:$USB_ID\" >> /tmp/${1}-${USB_SERVICE_NAME}-extraopts.env
 }
 
-remove_aux_env() {
-    local auxenv="/tmp/${1}-${AUX_SERVICE_NAME}-extraopts.env"
-    if [ -r ${auxenv} ]; then
-        rm -f ${auxenv}
-    fi
+remove_usb_env() {
+    [ -r /tmp/${1}-${USB_SERVICE_NAME}-extraopts.env ] && rm -f ${auxenv}
 }
 
 start_services() {
-    for version in v1 v2; do
-        systemctl is-active --quiet shairport-sync-${version}@${AUX_SERVICE_NAME}.service
+    for service_version in v1 v2; do
+        set_usb_env $service_version
+        systemctl is-active --quiet shairport-sync-${service_version}@${USB_SERVICE_NAME}.service
         if [ ${?} -ne 0 ]; then
-            set_aux_env ${version}
-            systemctl start shairport-sync-${version}@${AUX_SERVICE_NAME}.service
+            set_usb_env ${service_version}
+            systemctl start shairport-sync-${service_version}@${USB_SERVICE_NAME}.service
         fi
     done
 }
 
 stop_services() {
-    for version in v2 v1; do
-        systemctl is-active --quiet shairport-sync-${version}@${AUX_SERVICE_NAME}.service
+    for service_version in v2 v1; do
+        systemctl is-active --quiet shairport-sync-${service_version}@${USB_SERVICE_NAME}.service
         if [ ${?} -eq 0 ]; then
-            remove_aux_env ${version}
-            systemctl stop shairport-sync-${version}@${AUX_SERVICE_NAME}.service
+            remove_usb_env $service_version
+            systemctl stop shairport-sync-${service_version}@${USB_SERVICE_NAME}.service
         fi
     done
 }
 
 start() {
-    while true; do
-        # Detect AUX device
-        if aplay -L 2>/dev/null | grep -q ${AUX_DEV}; then
-            start_services
-        else
-            stop_services
-        fi
-    done
+    start_services
 }
 
 stop() {
