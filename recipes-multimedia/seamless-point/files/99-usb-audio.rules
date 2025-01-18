@@ -1,8 +1,8 @@
 ACTION=="change", SUBSYSTEM=="sound", \
 RUN+="/bin/bash -c \"\
 CARD_NUMBER=$(echo $DEVPATH | awk -F'/' '{print $NF}' | /usr/bin/sed 's/card//'); \
-CARD_ID=$(cat /proc/asound/card${CARD_NUMBER}/id); echo CARD_ID=$CARD_ID >> /tmp/usbsound_otps.env; \
-echo -e CARD_MODEL=$ID_USB_MODEL_ENC >> /tmp/usbsound_otps.env \
+CARD_ID=$(cat /proc/asound/card${CARD_NUMBER}/id); echo CARD_ID=$CARD_ID >> /tmp/usbsound_plug.env; \
+echo -e CARD_MODEL=\"$ID_USB_MODEL_ENC\" >> /tmp/usbsound_plug.env \
 \""
 
-ACTION=="remove", SUBSYSTEM=="sound", RUN+="/bin/bash -c \"rm -f /tmp/usbsound_otps.env\""
+ACTION=="remove", SUBSYSTEM=="sound", RUN+="/bin/bash -c \"rm -f /tmp/usbsound_plug.env\""
