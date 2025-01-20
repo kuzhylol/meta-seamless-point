@@ -6,6 +6,9 @@ After=bluetooth.service bluealsa.service
 [Service]
 ExecStart=/usr/bin/bt-interface.sh start
 ExecStop=/usr/bin/bt-interface.sh stop
+RemainAfterExit=true
+StandardOutput=journal
+StandardError=journal
 
 [Install]
 WantedBy=default.target
