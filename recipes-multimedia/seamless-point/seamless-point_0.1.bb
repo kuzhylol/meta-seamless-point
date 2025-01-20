@@ -35,7 +35,7 @@ do_install() {
     install -m 0755 ${WORKDIR}/99-seamless-point.rules ${D}/${sysconfdir}/udev/rules.d/
 }
 
-RDEPENDS:${PN} += "shairport-sync-v1 shairport-sync-v2 bluez-tools bluealsa bluez5 alsa-utils ntp nqptp gawk wpa-supplicant networkmanager python3-evdev python3-asyncio-glib coreutils"
+RDEPENDS:${PN} += "shairport-sync-v1 shairport-sync-v2 bluez-tools bluealsa bluez5 alsa-utils ntp nqptp gawk wpa-supplicant networkmanager python3-evdev python3-asyncio-glib coreutils bash"
 RRECOMMENDS:${PN} += "\
     ${MACHINE_EXTRA_RRECOMMENDS} \
 "
