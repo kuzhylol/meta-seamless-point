@@ -34,28 +34,27 @@ async def handle_events(device, hwindex):
 
 async def main():
     """Main function to monitor the device."""
-    parser = argparse.ArgumentParser(description="USB sound controller")
+    parser = argparse.ArgumentParser(description="USB sound controller")  
 
     parser.add_argument("-i", "--hwindex", type=int, choices=[0, 1, 2], default=2, help="Sound Card index")
-    args = parser.parse_args()
+    args = parser.parse_args()                                                                
 
     device_path = "/dev/input/usbsound_control_event0"
 
-    while True:
-        try:
-            # Open the device
-            device = evdev.InputDevice(device_path)
-            print(f"Monitoring device: {device.name} at {device.path}")
+    try:
+        # Open the device
+        device = evdev.InputDevice(device_path)
+        print(f"Monitoring device: {device.name} at {device.path}")
 
-            # Handle events asynchronously
-            await handle_events(device, str(args.hwindex))
+        # Handle events asynchronously
+        await handle_events(device, str(args.hwindex))
 
-        except FileNotFoundError:
-            print(f"Error: Device {device_path} not found.")
-        except PermissionError:
-            print(f"Error: Insufficient permissions to access {device_path}.")
-        except Exception as e:
-            print(f"Unexpected error: {e}")
+    except FileNotFoundError:
+        print(f"Error: Device {device_path} not found.")
+    except PermissionError:
+        print(f"Error: Insufficient permissions to access {device_path}.")
+    except Exception as e:
+        print(f"Unexpected error: {e}")
 
 
 if __name__ == "__main__":
