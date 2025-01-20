@@ -1,6 +1,7 @@
 [Unit]
 Description=AUX Connect controller
 After=network.target
+Wants=usbsound-controller.service
 
 [Service]
 ExecStart=/usr/bin/usb-interface.sh start

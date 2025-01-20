@@ -11,10 +11,11 @@
 LICENSE = "CLOSED"
 
 SRC_URI = "file://99-usb-audio.rules \
-           file://usb-interface.service \
-           file://usb-interface.sh \
            file://bt-interface.service \
            file://bt-interface.sh \
+           file://usb-interface.service \
+           file://usb-interface.sh \
+           file://usbsound-controller.service \
           "
 
 S = "${WORKDIR}"
@@ -25,6 +26,7 @@ do_install() {
 
     install -m 0644 ${WORKDIR}/usb-interface.service ${D}${systemd_unitdir}/system/
     install -m 0644 ${WORKDIR}/bt-interface.service ${D}${systemd_unitdir}/system/
+    install -m 0644 ${WORKDIR}/usbsound-controller.service ${D}${systemd_unitdir}/system/
 
     install -m 0755 ${WORKDIR}/usb-interface.sh ${D}${bindir}/
     install -m 0755 ${WORKDIR}/bt-interface.sh ${D}${bindir}/
@@ -33,7 +35,7 @@ do_install() {
     install -m 0755 ${WORKDIR}/99-usb-audio.rules ${D}/${sysconfdir}/udev/rules.d/
 }
 
-RDEPENDS:${PN} += "shairport-sync-v1 shairport-sync-v2 bluez-tools bluealsa bluez5 alsa-utils ntp nqptp gawk wpa-supplicant networkmanager"
+RDEPENDS:${PN} += "shairport-sync-v1 shairport-sync-v2 bluez-tools bluealsa bluez5 alsa-utils ntp nqptp gawk wpa-supplicant networkmanager python3-evdev python3-asyncio-glib"
 RRECOMMENDS:${PN} += "\
     ${MACHINE_EXTRA_RRECOMMENDS} \
 "

@@ -1,0 +1,14 @@
+[Unit]
+Description=USB Sound Card controller
+After=multi-user.target usb-interface.service
+
+[Service]
+Type=simple
+ExecStartPre=/bin/sh -c 'while [ ! -L /dev/input/usbsound_control_event0 ]; do sleep 1; done'
+ExecStart=python3 /usr/bin/usbsound-controller.py
+Restart=on-failure
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

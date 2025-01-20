@@ -1,12 +1,19 @@
+# USB Audio Card detection
 ACTION=="change", SUBSYSTEM=="sound", ENV{ID_BUS}=="usb", ENV{ID_USB_DRIVER}=="snd-usb-audio" \
 RUN+="/bin/bash -c \"\
 CARD_NUMBER=$(echo $DEVPATH | awk -F'/' '{print $NF}' | /usr/bin/sed 's/card//'); \
 CARD_ID=$(cat /proc/asound/card${CARD_NUMBER}/id); echo CARD_ID=$CARD_ID >> /tmp/usbsound_plug.env; \
 CARD_MODEL=$(echo -e $ID_USB_MODEL_ENC); echo CARD_MODEL=\'$CARD_MODEL\' >> /tmp/usbsound_plug.env; \
-systemctl start usb-interface; \
+systemctl start usb-interface \
 \""
 
+# USB Audio Card removal
 ACTION=="remove", SUBSYSTEM=="sound", \
 RUN+="/bin/bash -c \"systemctl stop usb-interface; \
 rm -f /tmp/usbsound_plug.env; \
+systemctl stop usbsound-controller.service \
 \""
+
+# USB Audio Card control detection
+ACTION=="add", KERNEL=="event*", SUBSYSTEM=="input", ENV{ID_TYPE}=="hid", ENV{ID_BUS}=="usb", ENV{ID_USB_TYPE}=="hid", ENV{ID_USB_DRIVER}=="usbhid", \
+SYMLINK+="input/usbsound_control_%k"
