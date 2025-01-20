@@ -17,3 +17,6 @@ systemctl stop usbsound-controller.service \
 # USB Audio Card control detection
 ACTION=="add", KERNEL=="event*", SUBSYSTEM=="input", ENV{ID_TYPE}=="hid", ENV{ID_BUS}=="usb", ENV{ID_USB_TYPE}=="hid", ENV{ID_USB_DRIVER}=="usbhid", \
 SYMLINK+="input/usbsound_control_%k"
+
+ACTION=="add", SUBSYSTEM=="bluetooth", ENV{DEVTYPE}=="link", \
+RUN+="/bin/bash -c 'systemctl start bt-interface'"
