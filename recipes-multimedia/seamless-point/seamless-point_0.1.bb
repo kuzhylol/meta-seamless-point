@@ -10,7 +10,7 @@
 #   LICENSE
 LICENSE = "CLOSED"
 
-SRC_URI = "file://99-usb-audio.rules \
+SRC_URI = "file://99-seamless-point.rules \
            file://bt-interface.service \
            file://bt-interface.sh \
            file://usb-interface.service \
@@ -32,7 +32,7 @@ do_install() {
     install -m 0755 ${WORKDIR}/bt-interface.sh ${D}${bindir}/
 
     install -d ${D}${sysconfdir}/udev/rules.d/
-    install -m 0755 ${WORKDIR}/99-usb-audio.rules ${D}/${sysconfdir}/udev/rules.d/
+    install -m 0755 ${WORKDIR}/99-seamless-point.rules ${D}/${sysconfdir}/udev/rules.d/
 }
 
 RDEPENDS:${PN} += "shairport-sync-v1 shairport-sync-v2 bluez-tools bluealsa bluez5 alsa-utils ntp nqptp gawk wpa-supplicant networkmanager python3-evdev python3-asyncio-glib coreutils"
@@ -42,5 +42,5 @@ RRECOMMENDS:${PN} += "\
 
 FILES:${PN} += "${systemd_unitdir}/system/*.service \
                 ${systemd_unitdir}/system-preset/* \
-                ${sysconfdir}/udev/rules.d/99-usb-audio.rules \
+                ${sysconfdir}/udev/rules.d/99-seamless-point.rules \
                "
