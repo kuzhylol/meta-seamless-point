@@ -11,16 +11,16 @@ do_install:append() {
     install -d ${D}${sysconfdir}/
     install -d ${D}${systemd_unitdir}/system/
 
-    install -m 0644 ${WORKDIR}/shairport-sync-v2-usb.conf ${D}${sysconfdir}/
-    install -m 0644 ${WORKDIR}/shairport-sync-v2-bt.conf ${D}${sysconfdir}/
+    install -m 0644 ${WORKDIR}/${PN}-usb.conf ${D}${sysconfdir}/
+    install -m 0644 ${WORKDIR}/${PN}-bt.conf ${D}${sysconfdir}/
 
-    install -m 0644 ${WORKDIR}/shairport-sync-v2@usb.service ${D}${systemd_unitdir}/system/
-    install -m 0644 ${WORKDIR}/shairport-sync-v2@.service ${D}${systemd_unitdir}/system/
+    install -m 0644 ${WORKDIR}/${PN}@usb.service ${D}${systemd_unitdir}/system/
+    install -m 0644 ${WORKDIR}/${PN}@.service ${D}${systemd_unitdir}/system/
 
-    mv ${D}${bindir}/shairport-sync ${D}${bindir}/shairport-sync-v2
+    mv ${D}${bindir}/shairport-sync ${D}${bindir}/${PN}
 }
 
 FILES:${PN} += "${systemd_unitdir}/system/*"
 FILES:${PN}-dev += "${sysconfdir}/shairport-sync.conf ${sysconfdir}/shairport-sync.conf.sample"
 
-CONFFILES:${PN} = "${sysconfdir}/shairport-sync-v2-usb.conf ${sysconfdir}/shairport-sync-v2-bt.conf"
+CONFFILES:${PN} = "${sysconfdir}/${PN}-usb.conf ${sysconfdir}/${PN}-bt.conf"
