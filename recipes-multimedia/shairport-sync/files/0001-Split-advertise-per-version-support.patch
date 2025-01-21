@@ -1,0 +1,62 @@
+From 25589bcbf6721db787cc7f8e615a2194c5d9cdce Mon Sep 17 00:00:00 2001
+From: Oleh Kuzhylnyi <kuzhylol@gmail.com>
+Date: Tue, 21 Jan 2025 20:50:05 +0100
+Subject: [PATCH] Split advertise per version support
+
+---
+ mdns.h | 6 +++---
+ rtsp.c | 2 --
+ 2 files changed, 3 insertions(+), 5 deletions(-)
+
+diff --git a/mdns.h b/mdns.h
+index d07afc6c..e81fda48 100644
+--- a/mdns.h
++++ b/mdns.h
+@@ -33,13 +33,13 @@ typedef struct {
+ 
+ /*
+  #define MDNS_RECORD_WITH_METADATA \
+-  "tp=UDP", "sm=false", "ek=1", "et=0,1", "cn=0,1", "ch=2", METADATA_EXPRESSION, "ss=16",                    \
++  "tp=UDP", "sm=false", "ek=1", "et=0,1", "ch=2", METADATA_EXPRESSION, "ss=16",                    \
+       "sr=44100", "vn=3", "txtvers=1", config.password ? "pw=true" : "pw=false"
+ */
+ #define MDNS_RECORD_WITH_METADATA                                                                  \
+   "sf=0x4", "fv=76400.10", "am=ShairportSync", "vs=105.1", "tp=TCP,UDP", "vn=65537",               \
+       METADATA_EXPRESSION, "ss=16", "sr=44100", "da=true", "sv=false", "et=0,1", "ek=1", \
+-      "cn=0,1", "ch=2", "txtvers=1", config.password ? "pw=true" : "pw=false"
++      "ch=2", "txtvers=1", config.password ? "pw=true" : "pw=false"
+ 
+ #endif
+ 
+@@ -52,7 +52,7 @@ typedef struct {
+ 
+ #define MDNS_RECORD_WITHOUT_METADATA                                                               \
+   "sf=0x4", "fv=76400.10", "am=ShairportSync", "vs=105.1", "tp=TCP,UDP", "vn=65537", "ss=16",      \
+-      "sr=44100", "da=true", "sv=false", "et=0,1", "ek=1", "cn=0,1", "ch=2", "txtvers=1",                    \
++      "sr=44100", "da=true", "sv=false", "et=0,1", "ek=1", "ch=2", "txtvers=1",                    \
+       config.password ? "pw=true" : "pw=false"
+ 
+ #endif // _MDNS_H
+diff --git a/rtsp.c b/rtsp.c
+index 3c2e0b0e..1d2daf90 100644
+--- a/rtsp.c
++++ b/rtsp.c
+@@ -271,7 +271,6 @@ void build_bonjour_strings(__attribute((unused)) rtsp_conn_info *conn) {
+   snprintf(pkString, sizeof(pkString), "pk=");
+   pkString_make(pkString + strlen("pk="), sizeof(pkString) - strlen("pk="),
+                 config.airplay_device_id);
+-  txt_records[entry_number++] = "cn=0,1";
+   txt_records[entry_number++] = "da=true";
+   txt_records[entry_number++] = "et=0,1";
+   txt_records[entry_number++] = ap1_featuresString;
+@@ -310,7 +309,6 @@ void build_bonjour_strings(__attribute((unused)) rtsp_conn_info *conn) {
+   txt_records[entry_number++] = "sv=false";
+   txt_records[entry_number++] = "et=0,1";
+   txt_records[entry_number++] = "ek=1";
+-  txt_records[entry_number++] = "cn=0,1";
+   txt_records[entry_number++] = "ch=2";
+   txt_records[entry_number++] = "txtvers=1";
+   if (config.password == 0)
+-- 
+2.34.1
+

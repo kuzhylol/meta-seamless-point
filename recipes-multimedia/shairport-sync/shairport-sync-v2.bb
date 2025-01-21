@@ -1,9 +1,11 @@
 include shairport-sync_git.inc
 
-SRC_URI += "file://shairport-sync-v2-usb.conf \
+SRC_URI += "file://0001-Split-advertise-per-version-support.patch \
             file://shairport-sync-v2-bt.conf \
+            file://shairport-sync-v2-usb.conf \
+            file://shairport-sync-v2@.service \
             file://shairport-sync-v2@usb.service \
-            file://shairport-sync-v2@.service"
+           "
 
 EXTRA_OECONF = "--with-soxr --with-apple-alac --with-avahi --with-ssl=openssl --with-alsa --with-airplay-2"
 
