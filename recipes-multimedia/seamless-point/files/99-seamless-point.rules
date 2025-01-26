@@ -20,3 +20,6 @@ SYMLINK+="input/usbsound_control_%k"
 
 ACTION=="add", SUBSYSTEM=="bluetooth", ENV{DEVTYPE}=="link", \
 RUN+="/bin/bash -c 'systemctl start bt-interface'"
+
+ACTION=="remove", SUBSYSTEM=="bluetooth", ENV{DEVTYPE}=="link", \
+RUN+="/bin/bash -c 'bluetoothctl info | grep \"Connected: yes\" || systemctl stop bt-interface'"
