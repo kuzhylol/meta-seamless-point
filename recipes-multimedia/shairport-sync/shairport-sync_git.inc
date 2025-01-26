@@ -16,4 +16,4 @@ DEPENDS = "libgcrypt libav alac openssl libconfig mbedtls popt libsodium libplis
 inherit autotools pkgconfig systemd
 
 FILES:${PN}-doc += "${mandir}/*"
-RDEPENDS:${PN} += "avahi"
+RDEPENDS:${PN} += "avahi-daemon libavahi-common libavahi-core dbus"
