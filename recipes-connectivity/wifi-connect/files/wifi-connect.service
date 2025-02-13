@@ -1,6 +1,6 @@
 [Unit]
 Description=Balena wifi connect service
-After=NetworkManager.service
+After=network.target NetworkManager.service
 
 [Service]
 Type=simple

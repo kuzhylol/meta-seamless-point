@@ -1,7 +1,7 @@
 [Unit]
 Description=Bluetooth Connect controller
-Requires=bluetooth.service bluealsa.service
-After=bluetooth.service bluealsa.service
+Requires=network-online.target bluetooth.service bluealsa.service
+After=network-online.target bluetooth.service bluealsa.service
 
 [Service]
 ExecStart=/usr/bin/bt-interface.sh start
