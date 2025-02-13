@@ -4,7 +4,7 @@ LICENSE = "Apache-2.0"
 
 inherit cargo
 
-SRC_URI = "git://github.com/balena-io/wifi-connect.git;protocol=https"
+SRC_URI = "git://github.com/balena-io/wifi-connect.git;protocol=https;branch=master"
 SRCREV ="ac333eb6a809b4daf3ac2e41f6c56799852caddc"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=3bfd34238ccc26128aef96796a8bbf97"
 
