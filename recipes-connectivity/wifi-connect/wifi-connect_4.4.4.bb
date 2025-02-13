@@ -14,7 +14,6 @@ CARGO_SRC_DIR = ""
 SRC_URI += "file://cargo_update.patch \
             file://start-wifi-connect.sh \
             file://wifi-connect.service \
-            file:://0001-rename-WiFi-Connect-SSID-to-SeamlessPoint.patch \
            "
 
 DEPENDS = "libdbus-c++ pkgconfig-native"
