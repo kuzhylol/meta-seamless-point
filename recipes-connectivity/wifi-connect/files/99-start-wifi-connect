@@ -1,0 +1,14 @@
+#!/bin/sh -x
+
+IFACE=$1   # Interface name (e.g., wlan0)
+EVENT=$2   # Event type (e.g., up, down, pre-up, etc.)
+
+if [ "$EVENT" = "down" ]; then
+    echo down >> /tmp/wlan0
+    systemctl start wifi-connect.service
+fi
+
+if [ "$EVENT" = "pre-up" ]; then
+    echo up >> /tmp/wlan0
+    systemctl stop wifi-connect.service
+fi
