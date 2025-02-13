@@ -32,13 +32,13 @@ do_install:append () {
     install -c -m 755 ${WORKDIR}/start-wifi-connect.sh ${D}${bindir}
 }
 
-FILES:${PN} += " \
-    ${datadir}/ui \
-    ${systemd_unitdir}/system/${BPN}.service \
-"
+FILES:${PN} += "${datadir}/ui \
+                ${systemd_unitdir}/system/${BPN}.service \
+               "
 
 inherit systemd
 
 SYSTEMD_SERVICE:${PN} = "${BPN}.service"
+SYSTEMD_AUTO_ENABLE = "enable"
 
 require ${BPN}-crates.inc
