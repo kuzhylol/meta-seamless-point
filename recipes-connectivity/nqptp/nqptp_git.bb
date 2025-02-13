@@ -8,6 +8,8 @@ SRC_URI = "git://github.com/mikebrady/nqptp.git;protocol=https;branch=main"
 PV = "1.2.5+git"
 SRCREV = "b8384c4a53632bab028c451a625ef51a1e767f29"
 
+S = "${WORKDIR}/git"
+
 inherit autotools pkgconfig systemd
 
 EXTRA_OECONF = ""
