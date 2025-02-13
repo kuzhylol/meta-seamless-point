@@ -5,6 +5,7 @@ SRC_URI = "git://github.com/balena-io/wifi-connect.git;protocol=https;branch=mas
            file://cargo_update.patch \
            file://start-wifi-connect.sh \
            file://wifi-connect.service \
+           file://99-start-wifi-connect \
            crate://crates.io/aho-corasick/0.6.10 \
            crate://crates.io/ansi_term/0.11.0 \
            crate://crates.io/ascii/0.8.7 \
@@ -129,7 +130,6 @@ SRC_URI = "git://github.com/balena-io/wifi-connect.git;protocol=https;branch=mas
            crate://crates.io/winapi/0.3.9 \
            crate://crates.io/winapi-i686-pc-windows-gnu/0.4.0 \
            crate://crates.io/winapi-x86_64-pc-windows-gnu/0.4.0 \
-           file://0001-rename-WiFi-Connect-SSID-to-SeamlessPoint.patch \
            "
 
 SRC_URI[aho-corasick-0.6.10.sha256sum] = "81ce3d38065e618af2d7b77e10c5ad9a069859b4be3c2250f674af3840d9c8a5"

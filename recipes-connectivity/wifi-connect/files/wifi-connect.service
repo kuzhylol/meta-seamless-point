@@ -3,14 +3,11 @@ Description=Balena wifi connect service
 After=network.target NetworkManager.service
 
 [Service]
-Type=simple
-ExecStartPre=/bin/sleep 30
 ExecStart=/usr/bin/start-wifi-connect.sh
 Restart=on-failure
 StandardOutput=syslog
 SyslogIdentifier=wifi-connect
-Type=idle
-User=root
+Type=oneshot
 
 [Install]
 WantedBy=multi-user.target

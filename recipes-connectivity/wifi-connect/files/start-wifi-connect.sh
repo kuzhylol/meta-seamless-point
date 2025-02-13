@@ -1,31 +1,15 @@
-#!/bin/sh
+#!/bin/sh -x
 
-# Optional step - it takes couple of seconds (or longer) to establish a WiFi connection
-# sometimes. In this case, following checks will fail and wifi-connect
-# will be launched even if the device will be able to connect to a WiFi network.
-# If this is your case, you can wait for a while and then check for the connection.
-sleep 15
+IFACE=$1   # Interface name (e.g., wlan0)
+EVENT=$2   # Event type (e.g., up, down, pre-up, etc.)
 
-# Choose a condition for running WiFi Connect according to your use case:
+mac_address=$(cat /sys/class/net/wlan0/address | tr -d ':' | cut -c 1-8)
 
-# 1. Is there a default gateway?
-# ip route | grep default
-
-# 2. Is there Internet connectivity?
-# nmcli -t g | grep full
-
-# 3. Is there Internet connectivity via a google ping?
 wget --spider http://google.com 2>&1
-
-# 4. Is there an active WiFi connection?
-# iwgetid -r
 
 if [ $? -eq 0 ]; then
     printf 'Skipping WiFi Connect\n'
 else
     printf 'Starting WiFi Connect\n'
-    wifi-connect -u /usr/share/wifi-connect/ui
+    wifi-connect -u /usr/share/wifi-connect/ui --portal-ssid "SeamlessPoint-${mac_address}"
 fi
-
-# Start your application here.
-sleep infinity
