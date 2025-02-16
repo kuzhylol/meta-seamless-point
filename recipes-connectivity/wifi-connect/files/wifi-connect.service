@@ -1,12 +1,13 @@
 [Unit]
 Description=Balena wifi connect service
-After=network.target NetworkManager.service
+Requires=dnsmasq.service
+After=network.target NetworkManager.service dnsmasq.service
 
 [Service]
-Type=simple
 ExecStart=/usr/bin/start-wifi-connect.sh
 StandardOutput=syslog
 SyslogIdentifier=wifi-connect
+Type=oneshot
 
 [Install]
 WantedBy=multi-user.target
