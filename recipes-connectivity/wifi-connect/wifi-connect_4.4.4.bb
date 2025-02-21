@@ -14,7 +14,6 @@ CARGO_SRC_DIR = ""
 SRC_URI += "file://cargo_update.patch \
             file://start-wifi-connect.sh \
             file://wifi-connect.service \
-            file://99-start-wifi-connect \
            "
 
 DEPENDS = "libdbus-c++ pkgconfig-native"
@@ -31,13 +30,9 @@ do_install:append () {
     fi
 
     install -m 755 ${WORKDIR}/start-wifi-connect.sh ${D}${bindir}
-
-    install -d ${D}${sysconfdir}/NetworkManager/dispatcher.d
-    install -m 755 ${WORKDIR}/99-start-wifi-connect ${D}${sysconfdir}/NetworkManager/dispatcher.d
 }
 
 FILES:${PN} += "${datadir}/ui \
-                ${sysconfdir}/NetworkManager/dispatcher.d/99-start-wifi-connect \
                 ${systemd_unitdir}/system/${BPN}.service \
                "
 
