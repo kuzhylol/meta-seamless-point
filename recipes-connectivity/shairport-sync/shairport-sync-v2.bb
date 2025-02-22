@@ -22,7 +22,7 @@ do_install:append() {
     mv ${D}${bindir}/shairport-sync ${D}${bindir}/${PN}
 }
 
-FILES:${PN} += "${systemd_unitdir}/system/*"
+SYSTEMD_SERVICE:${PN} = "${BPN}@usb.service ${BPN}@.service"
 FILES:${PN}-dev += "${sysconfdir}/shairport-sync.conf ${sysconfdir}/shairport-sync.conf.sample"
 
 CONFFILES:${PN} = "${sysconfdir}/${PN}-usb.conf ${sysconfdir}/${PN}-bt.conf"
