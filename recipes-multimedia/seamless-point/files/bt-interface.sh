@@ -81,7 +81,7 @@ process_connected() {
         fi
 
         # Process routine only in case shairport-sync service is not running
-        systemctl is-active --quiet ${SHAIRPORT_SYNC}-${version}@${alsadev}.service
+        systemctl is-active --quiet shairport-sync-${version}@${alsadev}.service
         if [ ${?} -ne 0 ]; then
             ln -fsr /etc/shairport-sync-${version}-bt.conf ${TEMPDIR}/shairport-sync-${version}-${alsadev}-bt.conf
             update_sp_config ${TEMPDIR}/shairport-sync-${version}-${alsadev}-bt.conf ${offset}
