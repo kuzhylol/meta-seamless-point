@@ -44,6 +44,7 @@ stop_airplay() {
                 [ -e "${file}" ] && unlink "${file}"
             done
         fi
+        python3 /usr/bin/asound-configurator.py remove ${mac}
     done
 }
 
@@ -85,6 +86,8 @@ process_connected() {
         if [ ${?} -ne 0 ]; then
             ln -fsr /etc/shairport-sync-${version}-bt.conf ${TEMPDIR}/shairport-sync-${version}-${alsadev}-bt.conf
             update_sp_config ${TEMPDIR}/shairport-sync-${version}-${alsadev}-bt.conf ${offset}
+
+            python3 /usr/bin/asound-configurator.py add ${mac}
 
             # Update the device name from Bluetooth attributes, otherwise keep default "Bluetooth Speaker" name
             local device_name="$(bluetoothctl info ${mac} | grep Name: | awk -F': ' '{print $2}')"
