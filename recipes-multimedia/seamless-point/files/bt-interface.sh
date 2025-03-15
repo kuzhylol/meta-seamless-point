@@ -37,14 +37,16 @@ stop_airplay() {
             systemctl stop shairport-sync-${version}@${alsadev}.service
 
             # Drop environment files
-            [  -r ${TEMPDIR}/${version}-${alsadev}-extraopts.env ] && \
+            [ -r ${TEMPDIR}/${version}-${alsadev}-extraopts.env ] && \
                 rm -f ${TEMPDIR}/${version}-${alsadev}-extraopts.env
+
+            [ "${version}" == "v1" ] && \
+                python3 /usr/bin/asound-configurator.py remove ${mac}
 
             for file in ${TEMPDIR}/shairport-sync-${version}-*-bt.conf; do
                 [ -e "${file}" ] && unlink "${file}"
             done
         fi
-        python3 /usr/bin/asound-configurator.py remove ${mac}
     done
 }
 
