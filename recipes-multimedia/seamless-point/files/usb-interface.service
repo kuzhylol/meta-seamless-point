@@ -1,8 +1,7 @@
 [Unit]
 Description=AUX Connect controller
-Wants=usbsound-controller.service
-Requires=network-online.target
-After=network-online.target usbsound-controller.service
+Wants=network-online.target
+After=network-online.target
 
 [Service]
 ExecStart=/usr/bin/usb-interface.sh start

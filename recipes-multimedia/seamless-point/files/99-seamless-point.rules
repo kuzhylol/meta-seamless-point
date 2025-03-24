@@ -10,8 +10,7 @@ systemctl start usb-interface \
 # USB Audio Card removal
 ACTION=="remove", SUBSYSTEM=="sound", \
 RUN+="/bin/bash -c \"systemctl stop usb-interface; \
-rm -f /tmp/usbsound_plug.env; \
-systemctl stop usbsound-controller.service \
+rm -f /tmp/usbsound_plug.env \
 \""
 
 # USB Audio Card control detection
