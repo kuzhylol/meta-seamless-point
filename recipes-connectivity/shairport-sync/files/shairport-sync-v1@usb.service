@@ -1,7 +1,7 @@
 [Unit]
-Description=Shairport Sync - AirPlay Audio Receiver
-Wants=network-online.target nqptp.service avahi.service
-After=network.target network-online.target nqptp.service avahi.service sound.target
+Description=Shairport Sync v1 - AirPlay Audio Receiver (USB)
+Wants=network-online.target
+After=network.target network-online.target sound.target
 
 [Service]
 EnvironmentFile=/tmp/v1-%I-extraopts.env
