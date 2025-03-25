@@ -1,10 +1,10 @@
 # USB Audio Card detection
-ACTION=="change|bind", SUBSYSTEM=="sound", ENV{ID_BUS}=="usb", ENV{ID_USB_DRIVER}=="snd-usb-audio" \
+ACTION=="change|bind", SUBSYSTEM=="sound", ENV{ID_BUS}=="usb", ENV{ID_USB_DRIVER}=="snd-usb-audio", \
+TAG+="systemd", ENV{SYSTEMD_WANTS}="usb-interface.service", \
 RUN+="/bin/bash -c \"\
 CARD_NUMBER=$(echo $DEVPATH | awk -F'/' '{print $NF}' | /usr/bin/sed 's/card//'); \
 CARD_ID=$(cat /proc/asound/card${CARD_NUMBER}/id); echo CARD_ID=$CARD_ID >> /tmp/usbsound_plug.env; \
-CARD_MODEL=$(echo -e $ID_USB_MODEL_ENC); echo CARD_MODEL=\'$CARD_MODEL\' >> /tmp/usbsound_plug.env; \
-systemctl start usb-interface \
+CARD_MODEL=$(echo -e $ID_USB_MODEL_ENC); echo CARD_MODEL=\'$CARD_MODEL\' >> /tmp/usbsound_plug.env \
 \""
 
 # USB Audio Card removal
@@ -18,7 +18,7 @@ ACTION=="add", KERNEL=="event*", SUBSYSTEM=="input", ENV{ID_TYPE}=="hid", ENV{ID
 SYMLINK+="input/usbsound_control_%k"
 
 ACTION=="add", SUBSYSTEM=="bluetooth", ENV{DEVTYPE}=="link", \
-RUN+="/bin/bash -c 'systemctl start bt-interface'"
+TAG+="systemd", ENV{SYSTEMD_WANTS}="bt-interface.service" \
 
 ACTION=="remove", SUBSYSTEM=="bluetooth", ENV{DEVTYPE}=="link", \
 RUN+="/bin/bash -c 'bluetoothctl info | grep \"Connected: yes\" || systemctl stop bt-interface'"

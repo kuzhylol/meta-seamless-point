@@ -1,5 +1,5 @@
 [Unit]
-Description=AUX Connect controller
+Description=USB Connect controller
 Wants=network-online.target
 After=network-online.target
 

@@ -10,13 +10,13 @@
 #   LICENSE
 LICENSE = "CLOSED"
 
-SRC_URI = "file://99-seamless-point.rules \
+SRC_URI = "file://asound-configurator.py \
            file://bt-interface.service \
            file://bt-interface.sh \
+           file://seamless-point.rules \
            file://usb-interface.service \
            file://usb-interface.sh \
            file://usbsound-controller.service \
-           file://asound-configurator.py \
           "
 
 S = "${WORKDIR}"
@@ -34,7 +34,7 @@ do_install() {
     install -m 0644 ${WORKDIR}/usbsound-controller.service ${D}${systemd_unitdir}/system/
 
     install -d ${D}${sysconfdir}/udev/rules.d/
-    install -m 0755 ${WORKDIR}/99-seamless-point.rules ${D}/${sysconfdir}/udev/rules.d/
+    install -m 0644 ${WORKDIR}/seamless-point.rules ${D}/${sysconfdir}/udev/rules.d/99-seamless-point.rules
 }
 
 RDEPENDS:${PN} += "alsa-utils \
