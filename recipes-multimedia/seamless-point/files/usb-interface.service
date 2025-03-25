@@ -1,7 +1,5 @@
 [Unit]
 Description=USB Connect controller
-Wants=network-online.target
-After=network-online.target
 
 [Service]
 ExecStart=/usr/bin/usb-interface.sh start
