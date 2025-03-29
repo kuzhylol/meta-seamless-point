@@ -2,19 +2,17 @@ SUMMARY = "Utility for dynamically setting the WiFi configuration via a captive 
 HOMEPAGE = "https://www.balena.io/blog/resin-wifi-connect/"
 LICENSE = "Apache-2.0"
 
-inherit cargo
+inherit cargo cargo-update-recipe-crates
 
-SRC_URI = "git://github.com/balena-io/wifi-connect.git;protocol=https;branch=master"
-SRCREV ="ac333eb6a809b4daf3ac2e41f6c56799852caddc"
+SRC_URI = "git://github.com/balena-io/wifi-connect.git;protocol=https;branch=master \
+           file://start-wifi-connect.sh \
+           file://wifi-connect.service \
+          "
+SRCREV = "04e0008f87637fa71de76b3aa722eb7109dba2fd"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=3bfd34238ccc26128aef96796a8bbf97"
 
 S = "${WORKDIR}/git"
 CARGO_SRC_DIR = ""
-
-SRC_URI += "file://cargo_update.patch \
-            file://start-wifi-connect.sh \
-            file://wifi-connect.service \
-           "
 
 DEPENDS = "libdbus-c++ pkgconfig-native"
 
@@ -22,7 +20,7 @@ RDEPENDS:${PN} += " networkmanager"
 
 do_install:append () {
     install -d ${D}${datadir}/wifi-connect/ui
-    cp -r ${S}/ui/build/* ${D}${datadir}/wifi-connect/ui
+    cp -r ${S}/ui/* ${D}${datadir}/wifi-connect/ui
 
     if ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'true', 'false', d)}; then
         install -d ${D}${systemd_unitdir}/system
