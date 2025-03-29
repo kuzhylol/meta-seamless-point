@@ -1,12 +1,10 @@
 [Unit]
-Description=Balena wifi connect service
+Description=Easy WiFi setup for Linux devices from your mobile phone or laptop
 Requires=dnsmasq.service
 After=network.target NetworkManager.service dnsmasq.service
 
 [Service]
 ExecStart=/usr/bin/start-wifi-connect.sh
-StandardOutput=syslog
-SyslogIdentifier=wifi-connect
 Type=oneshot
 
 [Install]
