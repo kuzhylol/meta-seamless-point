@@ -45,7 +45,6 @@ RDEPENDS:${PN} += "alsa-utils \
                    gawk \
                    networkmanager \
                    nqptp \
-                   ntp \
                    python3 \
                    python3-asyncio-glib \
                    python3-evdev \
@@ -53,6 +52,8 @@ RDEPENDS:${PN} += "alsa-utils \
                    shairport-sync-v2 \
                    wifi-connect \
                    wpa-supplicant \
+                   wireless-regdb \
+                   iw \
                   "
 
 RRECOMMENDS:${PN} += "\
