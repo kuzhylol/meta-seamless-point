@@ -16,12 +16,9 @@ CARGO_SRC_DIR = ""
 
 DEPENDS = "libdbus-c++ pkgconfig-native"
 
-RDEPENDS:${PN} += " networkmanager"
+RDEPENDS:${PN} = "networkmanager"
 
 do_install:append() {
-    install -d ${D}${datadir}/wifi-connect/ui
-    cp -r ${S}/ui/* ${D}${datadir}/wifi-connect/ui
-
     if ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'true', 'false', d)}; then
         install -d ${D}${systemd_unitdir}/system
         install -m 0644 ${WORKDIR}/wifi-connect.service ${D}${systemd_unitdir}/system
@@ -35,7 +32,6 @@ do_install:append() {
 }
 
 FILES:${PN} += "${bindir}/start-wifi-connect.sh \
-                ${datadir}/ui \
                 ${sysconfdir}/NetworkManager/dispatcher.d/99-start-wifi-connect.sh \
                 ${systemd_unitdir}/system/${BPN}.service \
                "
