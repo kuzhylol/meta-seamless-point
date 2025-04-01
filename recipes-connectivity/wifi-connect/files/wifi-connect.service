@@ -4,7 +4,7 @@ Requires=dnsmasq.service
 After=network.target NetworkManager.service dnsmasq.service
 
 [Service]
-ExecStart=/usr/bin/start-wifi-connect.sh
+ExecStart=/usr/bin/start-wifi-connect.sh start
 Type=oneshot
 
 [Install]

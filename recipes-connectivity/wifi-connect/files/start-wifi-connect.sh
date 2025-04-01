@@ -1,9 +1,17 @@
 #!/bin/sh -x
 
-sleep 15
+start() {
+    mac_address=$(cat /sys/class/net/wlan0/address | tr -d ':' | cut -c 1-8)
+    wifi-connect -u /usr/share/ui/ --portal-ssid "SeamlessPoint-${mac_address}"
+}
 
-nmcli -t -f TYPE connection show --active | grep -q 802-11-wireless && exit 0
+if [ "$1" = "wlan0" ] && [ "$2" = "down" ]; then
+    echo "Starting wifi-connect..."
+    start
+    exit 0
+fi
 
-mac_address=$(cat /sys/class/net/wlan0/address | tr -d ':' | cut -c 1-8)
+if [ "$1" = "start" ]; then
+    ip route | grep -q "default" || start
+fi
 
-wifi-connect -u /usr/share/wifi-connect/ui --portal-ssid "SeamlessPoint-${mac_address}"
