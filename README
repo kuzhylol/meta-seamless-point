@@ -1,41 +1,93 @@
-This README file contains information on the contents of the meta-seamless-point layer.
+meta-seamless-point
+===================
 
-Please see the corresponding sections below for details.
+Guides for building and managing seamless point yocto image.
 
-Dependencies
-============
+Build yocto image
+-----------------
 
-  URI: <first dependency>
-  branch: <branch name>
+0. Add project path as environment variable to bashrc:
+  ```bash
+  nano ~/.bashrc
+  ```
 
-  URI: <second dependency>
-  branch: <branch name>
+  ```bash
+  export sp="~/Documents/seamless-point"
+  ```
 
-  .
-  .
-  .
+  ```bash
+  source ~/.bashrc
+  ```
 
-Patches
-=======
+1. Install dependencies (Ubuntu 24.04):
+  ```bash
+  sudo apt install -y gawk wget git-core diffstat unzip texinfo gcc-multilib \
+    build-essential chrpath socat cpio python3 python3-pip python3-pexpect \ 
+    xz-utils debianutils iputils-ping python3-git python3-jinja2 libegl1 \
+    libsdl1.2-dev pylint xterm lz4 m4 gettext autoconf automake libtool \
+    libncurses-dev libncursesw5-dev
+  ```
 
-Please submit any patches against the meta-seamless-point layer to the xxxx mailing list (xxxx@zzzz.org)
-and cc: the maintainer:
+2. Undo restriction of unprivileged user namespaces:
+  ```bash
+  sudo sysctl kernel.apparmor_restrict_unprivileged_userns=0
+  ```
 
-Maintainer: XXX YYYYYY <xxx.yyyyyy@zzzzz.com>
+3. Sync seamless-point project:
+  ```bash
+  mkdir -p seamless-point && cd seamless-point/
+  ```
 
-Table of Contents
-=================
+  ```bash
+  repo init -u git@github.com:kuzhylol/seamless-point-manifest.git -b yocto-next
+  ```
 
-  I. Adding the meta-seamless-point layer to your build
- II. Misc
+  ```bash
+  repo sync -j$(nproc)
+  ```
 
+4. Initialize Yocto build environment:
+  ```bash
+  TEMPLATECONF=$sp/meta-seamless-point/conf/templates/sp-main source $sp/poky/oe-init-build-env
+  ```
 
-I. Adding the meta-seamless-point layer to your build
-=================================================
+5. Set machine for build:
+  ```bash
+  MACHINE = "qemux86-64"
+  ```
 
-Run 'bitbake-layers add-layer meta-seamless-point'
+6. Create image: 
+  ```bash
+  cd $sp/build/ && bitbake core-image-minimal
+  ```
 
-II. Misc
-========
+7. Run image:
+  ```bash
+  cd $sp && source $sp/poky/oe-init-build-env build
+  ```
 
---- replace with specific information about the meta-seamless-point layer ---
+  ```bash
+  export DEPLOY_DIR_IMAGE=$PWD/tmp/deploy/images/qemux86-64
+  ```
+
+  ```bash
+  export IMAGE_LINK_NAME=core-image-minimal-qemux86-64
+  ```
+
+  ```bash
+  runqemu qemux86-64
+  ```
+
+Error handling
+--------------
+
+1. Error: ***NOTE: Reconnecting to bitbake server... NOTE: No reply from server in 30s***. Fix:
+  ```bash
+  rm $sp/build/*.lock $sp/build/*.sock
+  ```
+
+2. Error: ***Task (seamless-point/poky/meta/recipes-devtools/binutils/task.bb:do_compile) failed with exit code '1'.***. Fix:
+  ```bash
+  bitbake task -c cleansstate && bitbake task
+  ```
+
