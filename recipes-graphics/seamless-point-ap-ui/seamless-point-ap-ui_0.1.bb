@@ -13,14 +13,15 @@ DEPENDS = "nodejs"
 inherit npm
 
 do_compile() {
+    export ESLINT_NO_CACHE=1
     cd ${S}
     npm install
     npm run build
 }
 
 do_install() {
-    install -d ${D}/usr/share/ui
-    cp -r ${S}/build/* ${D}/usr/share/ui/
+    install -d ${D}/usr/share/ui/build
+    cp -r ${S}/build/* ${D}/usr/share/ui/build
 }
 
-FILES:${PN} = "/usr/share/ui"
+FILES:${PN} = "/usr/share/ui/build"
