@@ -1,7 +1,6 @@
 [Unit]
 Description=Easy WiFi setup for Linux devices from your mobile phone or laptop
-Requires=dnsmasq.service
-After=network.target NetworkManager.service dnsmasq.service
+After=network.target NetworkManager.service
 
 [Service]
 ExecStart=/usr/bin/start-wifi-connect.sh start

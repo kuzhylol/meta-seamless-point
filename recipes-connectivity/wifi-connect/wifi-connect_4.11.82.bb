@@ -16,7 +16,7 @@ CARGO_SRC_DIR = ""
 
 DEPENDS = "libdbus-c++ pkgconfig-native"
 
-RDEPENDS:${PN} += "networkmanager"
+RDEPENDS:${PN} += "networkmanager dnsmasq"
 
 do_install:append() {
     if ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'true', 'false', d)}; then
