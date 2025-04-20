@@ -1,1 +1,1 @@
-RDEPENDS:${PN} = "seamless-point-ap-ui"
+RDEPENDS:${PN} += "seamless-point-ap-ui"
