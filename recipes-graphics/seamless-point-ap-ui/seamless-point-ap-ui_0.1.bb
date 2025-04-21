@@ -13,7 +13,6 @@ DEPENDS = "nodejs"
 inherit npm
 
 do_compile() {
-    export ESLINT_NO_CACHE=1
     cd ${S}
     npm install
     npm run build
