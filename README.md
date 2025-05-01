@@ -1,5 +1,12 @@
-meta-seamless-point
-===================
+![Seamless Point Logo](./assets/seamless-point-logo.png)
+
+**The Universal Audio Hub for Music, Media & Gaming**
+
+Seamless Point is a modern, minimalist audio device that seamlessly connects all your sound sources and outputs—whether you're listening to music, watching movies, or diving into high-performance PC gaming. Compatible with AirPlay, USB audio, and wireless speakers, it acts as a smart audio bridge between your devices and your environment.
+
+Designed for gamers and audiophiles alike, Seamless Point doubles as a **dedicated PC gaming audio station**, offering ultra-low latency sound routing, crystal-clear output, and flexible device switching. Whether you're using USB headphones, studio monitors, or Bluetooth headsets, Seamless Point keeps everything in sync—so your experience is uninterrupted, immersive, and effortless.
+
+From everyday listening to competitive gameplay, Seamless Point brings all your audio together into one intelligent, elegant system.
 
 Guides for building and managing seamless point yocto image.
 
