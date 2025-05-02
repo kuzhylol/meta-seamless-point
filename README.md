@@ -1,4 +1,4 @@
-![Seamless Point Logo](./assets/seamless-point-logo.png)
+![Seamless Point Logo](./assets/seamless-point-github-logo.png)
 
 **The Universal Audio Hub for Music, Media & Gaming**
 
