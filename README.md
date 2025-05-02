@@ -10,6 +10,10 @@ From everyday listening to competitive gameplay, Seamless Point brings all your 
 
 Guides for building and managing seamless point yocto image.
 
+Hardware render
+-----------------
+![Hardware Render](./assets/seamless-point-hardware-render.png)
+
 Build yocto image
 -----------------
 
