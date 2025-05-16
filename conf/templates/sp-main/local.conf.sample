@@ -42,6 +42,9 @@ CONFIG_PM_STD_PARTITION = "/dev/mmcblk0p2"
 RPI_EXTRA_CONFIG = ' \n \
 dtoverlay=disable-bt \n \
 dtoverlay=gc9a01.dtbo \n \
+dtparam=i2c_arm_baudrate=400000 \n \
+dtparam=i2c_arm=on \n \
+dtparam=i2c_vc=on \n \
 \'
 
 # Remote debugging needs gdbserver on the target device
