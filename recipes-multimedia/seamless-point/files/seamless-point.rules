@@ -22,3 +22,5 @@ TAG+="systemd", ENV{SYSTEMD_WANTS}="bt-interface.service" \
 
 ACTION=="remove", SUBSYSTEM=="bluetooth", ENV{DEVTYPE}=="link", \
 RUN+="/bin/bash -c 'bluetoothctl info | grep \"Connected: yes\" || systemctl stop bt-interface'"
+
+ACTION=="add", SUBSYSTEM=="net", KERNEL=="wlan*", RUN+="/sbin/iw dev %k set power_save off"
