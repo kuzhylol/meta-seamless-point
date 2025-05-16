@@ -42,6 +42,7 @@ RDEPENDS:${PN} += "alsa-utils \
                    bluez-tools bluealsa \
                    bluez5 \
                    coreutils \
+                   cst816x-driver \
                    gawk \
                    networkmanager \
                    nqptp \
