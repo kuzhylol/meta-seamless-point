@@ -52,6 +52,7 @@ RDEPENDS:${PN} += "alsa-utils \
                    shairport-sync-v1 \
                    shairport-sync-v2 \
                    wifi-connect \
+                   lvgl-ui \
                    wpa-supplicant \
                    wireless-regdb \
                    iw \
