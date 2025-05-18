@@ -1,0 +1,85 @@
+From d7aeb663a6157fe89f1ea08cba92db2300c47c60 Mon Sep 17 00:00:00 2001
+From: Oleh Kuzhylnyi <kuzhylol@gmail.com>
+Date: Sat, 17 May 2025 13:36:08 +0200
+Subject: [PATCH] adjust lv_conf.h for fbdev
+
+---
+ lv_conf.h | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/lv_conf.h b/lv_conf.h
+index 2448b96..ed89cf5 100644
+--- a/lv_conf.h
++++ b/lv_conf.h
+@@ -87,11 +87,11 @@
+  *====================*/
+ 
+ /** Default display refresh, input device read and animation step period. */
+-#define LV_DEF_REFR_PERIOD  33      /**< [ms] */
++#define LV_DEF_REFR_PERIOD  20      /**< [ms] */
+ 
+ /** Default Dots Per Inch. Used to initialize default sizes such as widgets sized, style paddings.
+  * (Not so important, you can adjust it to modify default sizes and spaces.) */
+-#define LV_DPI_DEF 130              /**< [px/inch] */
++#define LV_DPI_DEF 100              /**< [px/inch] */
+ 
+ /*=================
+  * OPERATING SYSTEM
+@@ -106,7 +106,7 @@
+  * - LV_OS_MQX
+  * - LV_OS_SDL2
+  * - LV_OS_CUSTOM */
+-#define LV_USE_OS   LV_OS_NONE
++#define LV_USE_OS   LV_OS_PTHREAD
+ 
+ #if LV_USE_OS == LV_OS_CUSTOM
+     #define LV_OS_CUSTOM_INCLUDE <stdint.h>
+@@ -142,7 +142,7 @@
+  * and can't be drawn in chunks. */
+ 
+ /** The target buffer size for simple layer chunks. */
+-#define LV_DRAW_LAYER_SIMPLE_BUF_SIZE    (24 * 1024)    /**< [bytes]*/
++#define LV_DRAW_LAYER_SIMPLE_BUF_SIZE    (240 * 240 * 2)    /**< [bytes]*/
+ 
+ /* Limit the max allocated memory for simple and transformed layers.
+  * It should be at least `LV_DRAW_LAYER_SIMPLE_BUF_SIZE` sized but if transformed layers are also used
+@@ -181,7 +181,7 @@
+     /** Set number of draw units.
+      *  - > 1 requires operating system to be enabled in `LV_USE_OS`.
+      *  - > 1 means multiple threads will render the screen in parallel. */
+-    #define LV_DRAW_SW_DRAW_UNIT_CNT    1
++    #define LV_DRAW_SW_DRAW_UNIT_CNT    2
+ 
+     /** Use Arm-2D to accelerate software (sw) rendering. */
+     #define LV_USE_DRAW_ARM2D_SYNC      0
+@@ -1182,7 +1182,7 @@
+ #define LV_USE_LINUX_FBDEV      1
+ #if LV_USE_LINUX_FBDEV
+     #define LV_LINUX_FBDEV_BSD           0
+-    #define LV_LINUX_FBDEV_RENDER_MODE   LV_DISPLAY_RENDER_MODE_PARTIAL
++    #define LV_LINUX_FBDEV_RENDER_MODE   LV_DISPLAY_RENDER_MODE_DIRECT
+     #define LV_LINUX_FBDEV_BUFFER_COUNT  2
+     #define LV_LINUX_FBDEV_BUFFER_SIZE   1080
+     #define LV_LINUX_FBDEV_MMAP          1
+@@ -1318,10 +1318,10 @@
+ #define LV_USE_DEMO_RENDER 1
+ 
+ /** Stress test for LVGL */
+-#define LV_USE_DEMO_STRESS 1
++#define LV_USE_DEMO_STRESS 0
+ 
+ /** Music player demo */
+-#define LV_USE_DEMO_MUSIC 1
++#define LV_USE_DEMO_MUSIC 0
+ #if LV_USE_DEMO_MUSIC
+     #define LV_DEMO_MUSIC_SQUARE    0
+     #define LV_DEMO_MUSIC_LANDSCAPE 0
+@@ -1347,7 +1347,7 @@
+ #define LV_USE_DEMO_TRANSFORM       1
+ 
+ /** Demonstrate scroll settings */
+-#define LV_USE_DEMO_SCROLL          1
++#define LV_USE_DEMO_SCROLL          0
+ 
+ /*E-bike demo with Lottie animations (if LV_USE_LOTTIE is enabled)*/
+ #define LV_USE_DEMO_EBIKE           0

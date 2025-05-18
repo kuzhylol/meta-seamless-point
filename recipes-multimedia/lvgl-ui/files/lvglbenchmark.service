@@ -1,0 +1,11 @@
+[Unit]
+Description=LVGL Benchmark UI
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/lvglbenchmark
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
