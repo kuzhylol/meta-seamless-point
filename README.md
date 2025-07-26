@@ -1,104 +1,66 @@
+Seamless Point
+================
 ![Seamless Point Logo](./assets/seamless-point-github-logo.png)
 
 **The Universal Audio Hub for Music, Media & Gaming**
 
-Seamless Point is a modern, minimalist audio device that seamlessly connects all your sound sources and outputs—whether you're listening to music, watching movies, or diving into high-performance PC gaming. Compatible with AirPlay, USB audio, and wireless speakers, it acts as a smart audio bridge between your devices and your environment.
+Seamless Point is a minimalist audio device that seamlessly connects all your sound outputs, whether you're listening to music, watching movies, or playing on PC.  
+Compatible with **[AirPlay](https://www.pocket-lint.com/apple-airplay-2-vs-airplay-what-s-the-difference/), USB audio, and wireless speakers**, it acts as a smart audio bridge between your devices and your environment.  
 
-Designed for gamers and audiophiles alike, Seamless Point doubles as a **dedicated PC gaming audio station**, offering ultra-low latency sound routing, crystal-clear output, and flexible device switching. Whether you're using USB headphones, studio monitors, or Bluetooth headsets, Seamless Point keeps everything in sync—so your experience is uninterrupted, immersive, and effortless.
+Designed for gamers and audiophiles alike, Seamless Point doubles as a **dedicated PC gaming audio station**, offering flexible device switching.  
+Whether you're using USB headphones or Bluetooth headsets, Seamless Point keeps everything in sync—so your experience is uninterrupted, immersive, and effortless.  
 
-From everyday listening to competitive gameplay, Seamless Point brings all your audio together into one intelligent, elegant system.
-
-Guides for building and managing seamless point yocto image.
-
-Hardware render
------------------
 ![Hardware Render](./assets/seamless-point-hardware-render.png)
 
-Build yocto image
+Support
+=======
+Hardware: Bluetooth Audio and USB Audio  
+Sofware: Linux-based, built on Yocto Project  
+Yocto version: Walnascar (5.2.2)  
+Airplay: AirPlay and Airplay 2 - Integration of [mikebrady/shairport-sync](https://github.com/mikebrady/shairport-sync)  
+WiFi Provisioning: Integration of [balena-os/wifi-connect](https://github.com/balena-os/wifi-connect)  
+Chromecast: None  
+
+iOS macOS: Native  
+Windows: [Tune Blade](http://www.tuneblade.com/)  
+Android: None  
+
+Supported Hardware platforms: Raspberry Pi 4b
+
+Roadmap
+=======
+- [ ] Implement LVGL UI for [1.28inch Round LCD Display Module with Touch panel](https://www.waveshare.com/1.28inch-touch-lcd.htm) with [touchscreen support](https://github.com/kuzhylol/cst816x-driver)
+- [ ] Tailor [seamless point web-UI](https://github.com/kuzhylol/seamless-point-ap-ui) for WiFi provisioning
+- [ ] Enchance AirPlay latency to support low-latency audio streaming to real-time gaming
+- [ ] Implement Chromecast support for Android
+- [ ] Port to other hardware platforms (e.g. [Radxa ZERO 3W](https://radxa.com/products/zeros/zero3w)
+- [ ] Port [OSTree](https://ostreedev.github.io/ostree/introduction/) for atomic updates
+- [ ] Port Secure Boot
+- [ ] Design industrial-grade PCB & plastic case
+
+Quick start
+===========
+
+Dependencies
+------------
+Requirements: [Compatible Linux Distribution](https://docs.yoctoproject.org/5.2.2/brief-yoctoprojectqs/index.html#compatible-linux-distribution)  
+Install [Yocto host packages](https://docs.yoctoproject.org/5.2.2/brief-yoctoprojectqs/index.html#build-host-packages)  
+Install [repo](https://source.android.com/setup/develop/repo)  
+
+Sync Yocto sources
+------------------
+```bash
+repo init -u git@github.com:kuzhylol/seamless-point-manifest.git -b walnascar  
+repo sync -j$(nproc)
+```
+
+Build Yocto image
 -----------------
+```bash
+TEMPLATECONF=meta-seamless-point/conf/templates/sp-main source poky/oe-init-build-env
+bitbake core-image-minimal
+```
 
-0. Add project path as environment variable to bashrc:
-  ```bash
-  nano ~/.bashrc
-  ```
-
-  ```bash
-  export sp="~/Documents/seamless-point"
-  ```
-
-  ```bash
-  source ~/.bashrc
-  ```
-
-1. Install dependencies (Ubuntu 24.04):
-  ```bash
-  sudo apt install -y gawk wget git-core diffstat unzip texinfo gcc-multilib \
-    build-essential chrpath socat cpio python3 python3-pip python3-pexpect \ 
-    xz-utils debianutils iputils-ping python3-git python3-jinja2 libegl1 \
-    libsdl1.2-dev pylint xterm lz4 m4 gettext autoconf automake libtool \
-    libncurses-dev libncursesw5-dev
-  ```
-
-2. Undo restriction of unprivileged user namespaces:
-  ```bash
-  sudo sysctl kernel.apparmor_restrict_unprivileged_userns=0
-  ```
-
-3. Sync seamless-point project:
-  ```bash
-  mkdir -p seamless-point && cd seamless-point/
-  ```
-
-  ```bash
-  repo init -u git@github.com:kuzhylol/seamless-point-manifest.git -b yocto-next
-  ```
-
-  ```bash
-  repo sync -j$(nproc)
-  ```
-
-4. Initialize Yocto build environment:
-  ```bash
-  TEMPLATECONF=$sp/meta-seamless-point/conf/templates/sp-main source $sp/poky/oe-init-build-env
-  ```
-
-5. Set machine for build:
-  ```bash
-  MACHINE = "qemux86-64"
-  ```
-
-6. Create image: 
-  ```bash
-  cd $sp/build/ && bitbake core-image-minimal
-  ```
-
-7. Run image:
-  ```bash
-  cd $sp && source $sp/poky/oe-init-build-env build
-  ```
-
-  ```bash
-  export DEPLOY_DIR_IMAGE=$PWD/tmp/deploy/images/qemux86-64
-  ```
-
-  ```bash
-  export IMAGE_LINK_NAME=core-image-minimal-qemux86-64
-  ```
-
-  ```bash
-  runqemu qemux86-64
-  ```
-
-Error handling
---------------
-
-1. Error: ***NOTE: Reconnecting to bitbake server... NOTE: No reply from server in 30s***. Fix:
-  ```bash
-  rm $sp/build/*.lock $sp/build/*.sock
-  ```
-
-2. Error: ***Task (seamless-point/poky/meta/recipes-devtools/binutils/task.bb:do_compile) failed with exit code '1'.***. Fix:
-  ```bash
-  bitbake task -c cleansstate && bitbake task
-  ```
-
+Flash image to SD card
+----------------------
+Use bmaptool to copy the generated .wic.bz2 file to the SD card
