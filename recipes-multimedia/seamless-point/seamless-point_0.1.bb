@@ -19,22 +19,22 @@ SRC_URI = "file://asound-configurator.py \
            file://usbsound-controller.service \
           "
 
-S = "${WORKDIR}"
+S = "${UNPACKDIR}"
 
 do_install() {
     install -d ${D}${bindir}/
-    install -m 0755 ${WORKDIR}/usb-interface.sh ${D}${bindir}/
-    install -m 0755 ${WORKDIR}/bt-interface.sh ${D}${bindir}/
-    install -m 0755 ${WORKDIR}/asound-configurator.py ${D}${bindir}/
+    install -m 0755 ${UNPACKDIR}/usb-interface.sh ${D}${bindir}/
+    install -m 0755 ${UNPACKDIR}/bt-interface.sh ${D}${bindir}/
+    install -m 0755 ${UNPACKDIR}/asound-configurator.py ${D}${bindir}/
 
     install -d ${D}${systemd_unitdir}/system/
 
-    install -m 0644 ${WORKDIR}/usb-interface.service ${D}${systemd_unitdir}/system/
-    install -m 0644 ${WORKDIR}/bt-interface.service ${D}${systemd_unitdir}/system/
-    install -m 0644 ${WORKDIR}/usbsound-controller.service ${D}${systemd_unitdir}/system/
+    install -m 0644 ${UNPACKDIR}/usb-interface.service ${D}${systemd_unitdir}/system/
+    install -m 0644 ${UNPACKDIR}/bt-interface.service ${D}${systemd_unitdir}/system/
+    install -m 0644 ${UNPACKDIR}/usbsound-controller.service ${D}${systemd_unitdir}/system/
 
     install -d ${D}${sysconfdir}/udev/rules.d/
-    install -m 0644 ${WORKDIR}/seamless-point.rules ${D}/${sysconfdir}/udev/rules.d/99-seamless-point.rules
+    install -m 0644 ${UNPACKDIR}/seamless-point.rules ${D}/${sysconfdir}/udev/rules.d/99-seamless-point.rules
 }
 
 RDEPENDS:${PN} += "alsa-utils \

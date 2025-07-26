@@ -9,7 +9,7 @@ SRC_URI = "git://github.com/mikebrady/shairport-sync.git;protocol=https;branch=m
 PV = "4.3.5+git"
 SRCREV = "a92df98fadc20dbc4fad880c531ee9e83a38aeca"
 
-S = "${WORKDIR}/git"
+S = "${UNPACKDIR}/git"
 
 DEPENDS = "libgcrypt libav alac openssl libconfig mbedtls popt libsodium libplist glib-2.0 libsndfile1 alsa-lib libdaemon util-linux-libuuid avahi soxr xxd-native"
 

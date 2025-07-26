@@ -10,7 +10,7 @@ SRC_URI = "git://github.com/mikebrady/nqptp.git;protocol=https;branch=main \
 PV = "1.2.5+git"
 SRCREV = "b8384c4a53632bab028c451a625ef51a1e767f29"
 
-S = "${WORKDIR}/git"
+S = "${UNPACKDIR}/git"
 
 inherit autotools pkgconfig systemd
 
@@ -20,7 +20,7 @@ do_install() {
     install -d ${D}${bindir}
     install -m 0755 ${B}/nqptp ${D}${bindir}/nqptp
     install -d ${D}${systemd_unitdir}/system/
-    install -m 0644 ${WORKDIR}/nqptp.service ${D}${systemd_unitdir}/system/
+    install -m 0644 ${B}/nqptp.service ${D}${systemd_unitdir}/system/
 }
 
 SYSTEMD_SERVICE:${PN} = "${BPN}.service"

@@ -62,7 +62,7 @@ SRC_URI = "gitsm://github.com/lvgl/lv_port_linux.git;protocol=https;branch=maste
 PV = "1.0+git"
 SRCREV = "adbca697c18f3f8e0df2f7b6c3f90f2e2ab7782a"
 
-S = "${WORKDIR}/git"
+S = "${UNPACKDIR}/git"
 
 # NOTE: unable to map the following pkg-config dependencies: sdl2 glew glfw3 SDL2_image
 #       (this is based on recipes that have previously been built and packaged)
@@ -81,5 +81,5 @@ do_install() {
     install -d ${D}${bindir}
     install -m 0755 ${B}/bin/lvglbenchmark ${D}${bindir}
     install -d ${D}${systemd_system_unitdir}
-    install -m 0644 ${WORKDIR}/lvglbenchmark.service ${D}${systemd_system_unitdir}
+    install -m 0644 ${UNPACKDIR}/lvglbenchmark.service ${D}${systemd_system_unitdir}
 }

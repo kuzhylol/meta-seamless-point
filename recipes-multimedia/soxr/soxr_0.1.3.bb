@@ -9,7 +9,7 @@ SRC_URI = "http://downloads.sourceforge.net/${BPN}/${BPN}-${PV}-Source.tar.xz"
 SRC_URI[md5sum] = "3f16f4dcb35b471682d4321eda6f6c08"
 SRC_URI[sha256sum] = "b111c15fdc8c029989330ff559184198c161100a59312f5dc19ddeb9b5a15889"
 
-S = "${WORKDIR}/${BPN}-${PV}-Source"
+S = "${UNPACKDIR}/${BPN}-${PV}-Source"
 
 EXTRA_OECMAKE += "\
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \

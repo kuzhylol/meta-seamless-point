@@ -6,7 +6,7 @@ SRC_URI = "git://github.com/kuzhylol/cst816x-driver.git;protocol=https;branch=ma
 PV = "1.0+git"
 SRCREV = "${AUTOREV}"
 
-S = "${WORKDIR}/git"
+S = "${UNPACKDIR}/git"
 
 inherit module
 

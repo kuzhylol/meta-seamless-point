@@ -13,11 +13,11 @@ do_install:append() {
     install -d ${D}${sysconfdir}/
     install -d ${D}${systemd_unitdir}/system/
 
-    install -m 0644 ${WORKDIR}/${PN}-usb.conf ${D}${sysconfdir}/
-    install -m 0644 ${WORKDIR}/${PN}-bt.conf ${D}${sysconfdir}/
+    install -m 0644 ${UNPACKDIR}/${PN}-usb.conf ${D}${sysconfdir}/
+    install -m 0644 ${UNPACKDIR}/${PN}-bt.conf ${D}${sysconfdir}/
 
-    install -m 0644 ${WORKDIR}/${PN}@usb.service ${D}${systemd_unitdir}/system/
-    install -m 0644 ${WORKDIR}/${PN}@.service ${D}${systemd_unitdir}/system/
+    install -m 0644 ${UNPACKDIR}/${PN}@usb.service ${D}${systemd_unitdir}/system/
+    install -m 0644 ${UNPACKDIR}/${PN}@.service ${D}${systemd_unitdir}/system/
 
     mv ${D}${bindir}/shairport-sync ${D}${bindir}/${PN}
 }

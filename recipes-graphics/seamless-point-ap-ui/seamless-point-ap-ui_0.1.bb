@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=86d3f3a95c324c9479bd8986968f4327"
 SRC_URI = "git://github.com/kuzhylol/seamless-point-ap-ui.git;protocol=https;branch=main"
 SRCREV = "${AUTOREV}"
 
-S = "${WORKDIR}/git"
+S = "${UNPACKDIR}/git"
 
 DEPENDS = "nodejs"
 

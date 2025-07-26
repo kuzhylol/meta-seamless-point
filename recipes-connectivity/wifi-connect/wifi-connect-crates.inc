@@ -133,7 +133,7 @@ SRC_URI += " \
 
 SRCREV_FORMAT .= "_network-manager"
 SRCREV_network-manager = "4da2e6a57de16b6ae911f74321f929d78af8b1ba"
-EXTRA_OECARGO_PATHS += "${WORKDIR}/network-manager"
+EXTRA_OECARGO_PATHS += "${UNPACKDIR}/network-manager"
 
 SRC_URI[aho-corasick-0.6.10.sha256sum] = "81ce3d38065e618af2d7b77e10c5ad9a069859b4be3c2250f674af3840d9c8a5"
 SRC_URI[ansi_term-0.12.1.sha256sum] = "d52a9bb7ec0cf484c551830a7ce27bd20d67eac647e1befb56b0be4ee39a55d2"

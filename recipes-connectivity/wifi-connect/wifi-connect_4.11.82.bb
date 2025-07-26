@@ -11,7 +11,7 @@ SRC_URI = "git://github.com/balena-io/wifi-connect.git;protocol=https;branch=mas
 SRCREV = "04e0008f87637fa71de76b3aa722eb7109dba2fd"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=3bfd34238ccc26128aef96796a8bbf97"
 
-S = "${WORKDIR}/git"
+S = "${UNPACKDIR}/git"
 CARGO_SRC_DIR = ""
 
 DEPENDS = "libdbus-c++ pkgconfig-native"
@@ -21,11 +21,11 @@ RDEPENDS:${PN} = "networkmanager"
 do_install:append() {
     if ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'true', 'false', d)}; then
         install -d ${D}${systemd_unitdir}/system
-        install -m 0644 ${WORKDIR}/wifi-connect.service ${D}${systemd_unitdir}/system
+        install -m 0644 ${UNPACKDIR}/wifi-connect.service ${D}${systemd_unitdir}/system
     fi
 
     install -d ${D}${bindir}
-    install -m 0755 ${WORKDIR}/start-wifi-connect.sh ${D}${bindir}
+    install -m 0755 ${UNPACKDIR}/start-wifi-connect.sh ${D}${bindir}
 
     install -d ${D}${sysconfdir}/NetworkManager/dispatcher.d
     ln -fsr ${D}${bindir}/start-wifi-connect.sh ${D}${sysconfdir}/NetworkManager/dispatcher.d/99-start-wifi-connect.sh

@@ -9,7 +9,7 @@ SRC_URI = "git://github.com/mikebrady/alac.git;protocol=https;branch=master"
 PV = "0.0.7+git"
 SRCREV = "1832544d27d01335d823d639b176d1cae25ecfd4"
 
-S = "${WORKDIR}/git"
+S = "${UNPACKDIR}/git"
 
 inherit autotools
 
