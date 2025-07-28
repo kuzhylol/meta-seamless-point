@@ -1,7 +1,8 @@
 MACHINE = "raspberrypi4-64"
 DISTRO ?= "poky"
 PACKAGE_CLASSES ?= "package_deb"
-EXTRA_IMAGE_FEATURES ?= "debug-tweaks package-management serial-autologin-root ssh-server-openssh"
+EXTRA_IMAGE_FEATURES ?= "package-management serial-autologin-root ssh-server-dropbear empty-root-password allow-root-login allow-empty-password splash"
+BAD_RECOMMENDATIONS += "openssh-sftp-server"
 USER_CLASSES ?= "buildstats"
 PATCHRESOLVE = "noop"
 BB_DISKMON_DIRS ??= "\
@@ -13,18 +14,16 @@ BB_DISKMON_DIRS ??= "\
     HALT,${DL_DIR},100M,1K \
     HALT,${SSTATE_DIR},100M,1K \
     HALT,/tmp,10M,1K"
-PACKAGECONFIG:append:pn-qemu-system-native = " sdl"
 CONF_VERSION = "2"
 
 RM_OLD_IMAGE = "1"
 INHERIT += "rm_work"
+INHERIT += "ccache"
 
 LICENSE_FLAGS_ACCEPTED = "commercial synaptics-killswitch"
 
-DISTRO_FEATURES = "alsa bluetooth ipv4 systemd wifi xattr"
+DISTRO_FEATURES = "alsa bluetooth ipv4 systemd wifi"
 INIT_MANAGER = "systemd"
-
-DISTRO_FEATURES += "x11 wayland opengl"
 
 ENABLE_KGDB = "1"
 DISABLE_RPI_BOOT_LOGO = "1"
@@ -48,10 +47,14 @@ dtparam=i2c_vc=on \n \
 \'
 
 # Remote debugging needs gdbserver on the target device
-IMAGE_INSTALL:append = " gdbserver"
 IMAGE_INSTALL:append = " seamless-point"
 
 RPI_KERNEL_DEVICETREE_OVERLAYS:append = " overlays/gc9a01.dtbo"
 
 MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS += "kernel-module-brcmfmac"
 MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS += "kernel-module-brcmfmac-wcc"
+
+PREFERRED_PROVIDER_libav:raspberrypi4-64 = "rpidistro-ffmpeg"
+PREFERRED_PROVIDER_libav = "ffmpeg"
+
+INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
