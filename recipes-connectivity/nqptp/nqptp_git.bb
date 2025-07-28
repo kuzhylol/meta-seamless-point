@@ -20,7 +20,7 @@ do_install() {
     install -d ${D}${bindir}
     install -m 0755 ${B}/nqptp ${D}${bindir}/nqptp
     install -d ${D}${systemd_unitdir}/system/
-    install -m 0644 ${B}/nqptp.service ${D}${systemd_unitdir}/system/
+    install -m 0644 ${UNPACKDIR}/nqptp.service ${D}${systemd_unitdir}/system/
 }
 
 SYSTEMD_SERVICE:${PN} = "${BPN}.service"
