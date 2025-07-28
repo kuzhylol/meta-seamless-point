@@ -8,8 +8,6 @@ SRCREV = "${AUTOREV}"
 
 S = "${UNPACKDIR}/git"
 
-DEPENDS = "nodejs"
-
 inherit npm
 
 do_compile() {
