@@ -1,14 +1,14 @@
 include shairport-sync_git.inc
 
-SRC_URI += "file://0001-Split-advertise-per-version-support.patch \
-            file://shairport-sync-v1-usb.conf \
+SRC_URI += "file://shairport-sync-v1-usb.conf \
             file://shairport-sync-v1-bt.conf \
             file://shairport-sync-v1@.service \
             file://shairport-sync-v1@usb.service \
            "
 
-EXTRA_OECONF = "--with-apple-alac --with-alsa --with-dns_sd --with-soxr --with-ssl=mbedtls"
-EXTRA_OEMAKE = "CFLAGS=-I${STAGING_INCDIR}/avahi-compat-libdns_sd"
+PACKAGECONFIG ??= " alac alsa mbedtls soxr dns-sd"
+
+DEPENDS += "libconfig"
 
 do_install:append() {
     install -d ${D}${sysconfdir}/
