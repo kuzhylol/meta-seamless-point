@@ -1,12 +1,14 @@
 LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=570a9b3749dd0463a1778803b12a6dce"
 
-SRC_URI = "git://github.com/kuzhylol/cst816x-driver.git;protocol=https;branch=main"
+SRC_URI = "git://github.com/kuzhylol/cst816x-driver.git;protocol=https;branch=main \
+           file://0001-Add-compat-with-linux-6.12.patch \
+           "
 
 PV = "1.0+git"
 SRCREV = "${AUTOREV}"
 
-S = "${UNPACKDIR}/git"
+S = "${WORKDIR}/git"
 
 inherit module
 

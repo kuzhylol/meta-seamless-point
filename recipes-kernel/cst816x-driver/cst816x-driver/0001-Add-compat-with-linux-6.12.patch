@@ -1,0 +1,23 @@
+Upstream-Status: Inappropriate [embedded workaround]
+From 18382a036393ad1f3294093ca367482ef049696d Mon Sep 17 00:00:00 2001
+From: Oleh Kuzhylnyi <kuzhylol@gmail.com>
+Date: Sun, 27 Jul 2025 16:42:13 +0200
+Subject: [PATCH] Add compat with linux-6.12
+
+---
+ hynitron-cst816x.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hynitron-cst816x.c b/hynitron-cst816x.c
+index b1a5ece..5eabbbf 100644
+--- a/hynitron-cst816x.c
++++ b/hynitron-cst816x.c
+@@ -9,7 +9,7 @@
+ #include <linux/gpio/consumer.h>
+ #include <linux/i2c.h>
+ #include <linux/input.h>
+-#include <asm/unaligned.h>
++#include <linux/unaligned.h>
+ #include <linux/interrupt.h>
+ #include <linux/module.h>
+ 
