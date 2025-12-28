@@ -25,6 +25,5 @@ do_install:append() {
 }
 
 FILES:${PN} += "${systemd_unitdir}/system/*"
-FILES:${PN}-dev += "${sysconfdir}/shairport-sync.conf ${sysconfdir}/shairport-sync.conf.sample"
 
 CONFFILES:${PN} = "${sysconfdir}/${PN}-usb.conf ${sysconfdir}/${PN}-bt.conf"
