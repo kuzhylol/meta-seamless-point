@@ -41,8 +41,8 @@ PACKAGECONFIG[tinysvcmdns] = "--with-tinysvcmdns"
 PACKAGECONFIG[external-mdns] = "--with-external-mdns"
 PACKAGECONFIG[dns-sd] = "--with-dns_sd,,avahi,avahi-daemon"
 
-PV = "4.3.5+git"
-SRCREV = "a92df98fadc20dbc4fad880c531ee9e83a38aeca"
+PV = "4.3.7+git"
+SRCREV = "3c8ceb7c97c8782903ec48e280023436711e0913"
 
 S = "${UNPACKDIR}/git"
 

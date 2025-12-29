@@ -7,8 +7,8 @@ SRC_URI = "git://github.com/mikebrady/nqptp.git;protocol=https;branch=main \
            file://nqptp.service \
           "
 
-PV = "1.2.5+git"
-SRCREV = "b8384c4a53632bab028c451a625ef51a1e767f29"
+PV = "1.2.4+git"
+SRCREV = "591f425d9da69f1c4e09f3ad09611b758937b3e5"
 
 S = "${UNPACKDIR}/git"
 
