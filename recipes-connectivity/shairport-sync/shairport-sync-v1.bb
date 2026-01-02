@@ -6,7 +6,7 @@ SRC_URI += "file://shairport-sync-v1-usb.conf \
             file://shairport-sync-v1@usb.service \
            "
 
-PACKAGECONFIG ??= " alac alsa mbedtls soxr dns-sd"
+PACKAGECONFIG ??= " avahi alac alsa mbedtls soxr"
 
 DEPENDS += "libconfig"
 
