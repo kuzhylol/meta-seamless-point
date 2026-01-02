@@ -22,6 +22,9 @@ do_install:append() {
     install -m 0644 ${UNPACKDIR}/${PN}@.service ${D}${systemd_unitdir}/system/
 
     mv ${D}${bindir}/shairport-sync ${D}${bindir}/${PN}
+
+    rm -f ${D}${sysconfdir}/shairport-sync.conf
+    rm -f ${D}${sysconfdir}/shairport-sync.conf.sample
 }
 
 FILES:${PN} += "${systemd_unitdir}/system/*"
