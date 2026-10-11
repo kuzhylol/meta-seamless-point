@@ -1,66 +1,104 @@
-Seamless Point
-================
 ![Seamless Point Logo](./assets/seamless-point-github-logo.png)
 
 **The Universal Audio Hub for Music, Media & Gaming**
 
-Seamless Point is a minimalist audio device that seamlessly connects all your sound outputs, whether you're listening to music, watching movies, or playing on PC.  
-Compatible with **[AirPlay](https://www.pocket-lint.com/apple-airplay-2-vs-airplay-what-s-the-difference/), USB audio, and wireless speakers**, it acts as a smart audio bridge between your devices and your environment.  
+Seamless Point is a modern, minimalist audio device that seamlessly connects all your sound sources and outputs—whether you're listening to music, watching movies, or diving into high-performance PC gaming. Compatible with AirPlay, USB audio, and wireless speakers, it acts as a smart audio bridge between your devices and your environment.
 
-Designed for gamers and audiophiles alike, Seamless Point doubles as a **dedicated PC gaming audio station**, offering flexible device switching.  
-Whether you're using USB headphones or Bluetooth headsets, Seamless Point keeps everything in sync—so your experience is uninterrupted, immersive, and effortless.  
+Designed for gamers and audiophiles alike, Seamless Point doubles as a **dedicated PC gaming audio station**, offering ultra-low latency sound routing, crystal-clear output, and flexible device switching. Whether you're using USB headphones, studio monitors, or Bluetooth headsets, Seamless Point keeps everything in sync—so your experience is uninterrupted, immersive, and effortless.
 
+From everyday listening to competitive gameplay, Seamless Point brings all your audio together into one intelligent, elegant system.
+
+Guides for building and managing seamless point yocto image.
+
+Hardware render
+-----------------
 ![Hardware Render](./assets/seamless-point-hardware-render.png)
 
-Support
-=======
-Hardware: Bluetooth Audio and USB Audio  
-Sofware: Linux-based, built on Yocto Project  
-Yocto version: Walnascar (5.2.2)  
-Airplay: AirPlay and Airplay 2 - Integration of [mikebrady/shairport-sync](https://github.com/mikebrady/shairport-sync)  
-WiFi Provisioning: Integration of [balena-os/wifi-connect](https://github.com/balena-os/wifi-connect)  
-Chromecast: None  
+Build yocto image (native, Ubuntu)
+----------------------------------
 
-iOS macOS: Native  
-Windows: [Tune Blade](http://www.tuneblade.com/)  
-Android: None  
+Tested on Ubuntu 22.04/24.04. BitBake must not be run as root.
 
-Supported Hardware platforms: Raspberry Pi 4b
+0. Point an environment variable at the project root (optional, used below):
+  ```bash
+  echo 'export sp="$HOME/Documents/seamless-point"' >> ~/.bashrc
+  source ~/.bashrc
+  ```
 
-Roadmap
-=======
-- [ ] Implement LVGL UI for [1.28inch Round LCD Display Module with Touch panel](https://www.waveshare.com/1.28inch-touch-lcd.htm) with [touchscreen support](https://github.com/kuzhylol/cst816x-driver)
-- [ ] Tailor [seamless point web-UI](https://github.com/kuzhylol/seamless-point-ap-ui) for WiFi provisioning
-- [ ] Enchance AirPlay latency to support low-latency audio streaming to real-time gaming
-- [ ] Implement Chromecast support for Android
-- [ ] Port to other hardware platforms (e.g. [Radxa ZERO 3W](https://radxa.com/products/zeros/zero3w)
-- [ ] Port [OSTree](https://ostreedev.github.io/ostree/introduction/) for atomic updates
-- [ ] Port Secure Boot
-- [ ] Design industrial-grade PCB & plastic case
+1. Install the Yocto host dependencies:
+  ```bash
+  sudo apt-get update && sudo apt-get install -y \
+    gawk wget git diffstat unzip texinfo gcc build-essential chrpath socat \
+    cpio python3 python3-pip python3-pexpect xz-utils debianutils \
+    iputils-ping python3-git python3-jinja2 python3-subunit zstd liblz4-tool \
+    file locales libacl1 bzip2 rsync kmod
+  ```
 
-Quick start
-===========
+2. Ensure a UTF-8 locale (BitBake aborts without one):
+  ```bash
+  sudo locale-gen en_US.UTF-8
+  export LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
+  ```
 
-Dependencies
-------------
-Requirements: [Compatible Linux Distribution](https://docs.yoctoproject.org/5.2.2/brief-yoctoprojectqs/index.html#compatible-linux-distribution)  
-Install [Yocto host packages](https://docs.yoctoproject.org/5.2.2/brief-yoctoprojectqs/index.html#build-host-packages)  
-Install [repo](https://source.android.com/setup/develop/repo)  
+3. On Ubuntu 23.10+ only, allow unprivileged user namespaces (needed by
+   BitBake's pseudo/sandboxing):
+  ```bash
+  sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+  ```
 
-Sync Yocto sources
-------------------
-```bash
-repo init -u git@github.com:kuzhylol/seamless-point-manifest.git -b walnascar  
-repo sync -j$(nproc)
-```
+4. Sync the project (skip if already synced):
+  ```bash
+  mkdir -p "$sp" && cd "$sp"
+  repo init -u git@github.com:kuzhylol/seamless-point-manifest.git -b scarthgap
+  repo sync -j"$(nproc)"
+  ```
 
-Build Yocto image
------------------
-```bash
-TEMPLATECONF=meta-seamless-point/conf/templates/sp-main source poky/oe-init-build-env
-bitbake core-image-minimal
-```
+5. Initialise the Yocto build environment (creates "$sp/build"):
+  ```bash
+  TEMPLATECONF="$sp/meta-seamless-point/conf/templates/sp-main" \
+    source "$sp/poky/oe-init-build-env" "$sp/build"
+  ```
 
-Flash image to SD card
-----------------------
-Use bmaptool to copy the generated .wic.bz2 file to the SD card
+6. The default MACHINE is `raspberrypi4-64` (set in local.conf). To build for
+   the QEMU emulator instead, edit `conf/local.conf` and set:
+  ```
+  MACHINE = "qemux86-64"
+  ```
+
+7. Build the image:
+  ```bash
+  bitbake core-image-minimal
+  ```
+  Output is written to `build/tmp/deploy/images/<machine>/`.
+
+8. Run the image under QEMU (only when MACHINE = "qemux86-64"):
+  ```bash
+  source "$sp/poky/oe-init-build-env" "$sp/build"
+  runqemu qemux86-64
+  ```
+
+
+Build yocto image (Docker)
+--------------------------
+
+The container provides a known-good Ubuntu build host, so the only host
+requirement is Docker. The Dockerfile lives in
+`meta-seamless-point/conf/templates/sp-main/Dockerfile.seamless-point`.
+
+1. Build the image (runs as an unprivileged user matching your UID/GID so the
+   bind-mounted tree keeps correct ownership):
+  ```bash
+  cd "$sp"
+  docker build -t seamless-point-yocto \
+    --build-arg USER_ID="$(id -u)" --build-arg GROUP_ID="$(id -g)" \
+    -f meta-seamless-point/conf/templates/sp-main/Dockerfile.seamless-point .
+  ```
+
+2. Build a target inside the container (the workspace is bind-mounted at
+   /workspace; `build/` is shared with the host):
+  ```bash
+  docker run --rm -it -v "$sp:/workspace" seamless-point-yocto bash -c '
+    export TEMPLATECONF=/workspace/meta-seamless-point/conf/templates/sp-main
+    source poky/oe-init-build-env build
+    bitbake core-image-minimal'
+  ```
